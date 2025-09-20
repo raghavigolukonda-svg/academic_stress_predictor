@@ -154,3 +154,6 @@ Ensure dataset and model files are present in project root.
 If using new data, make sure to match feature columns for one-hot encoding.
 
 Numeric inputs (Peer Pressure, Academic Pressure, Competition) must be between 1–5.
+DEMO(PICTURE)
+<img width="900" height="1329" alt="image" src="https://github.com/user-attachments/assets/f6c958a3-9632-4cbb-aea6-cc2bb40ca7cc" />
+
