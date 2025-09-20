@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Academic Stress Predictor</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    /* ======= BODY & BACKGROUND ======= */
+    body {
+      margin: 0;
+      font-family: 'Poppins', sans-serif;
+      height: 100vh;
+      overflow: hidden;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: #0f2027;
+      background: linear-gradient(to right, #2c5364, #203a43, #0f2027);
+      position: relative;
+      color: #fff;
+    }
+
+    /* ======= FLOATING STARS ======= */
+    .star {
+      position: absolute;
+      background: white;
+      border-radius: 50%;
+      opacity: 0.8;
+      animation: float 6s linear infinite;
+    }
+
+    @keyframes float {
+      0% { transform: translateY(0) translateX(0); opacity: 0.8; }
+      50% { transform: translateY(-100vh) translateX(50px); opacity: 0.4; }
+      100% { transform: translateY(0) translateX(0); opacity: 0.8; }
+    }
+
+    /* ======= CONTAINER ======= */
+    .container {
+      background: rgba(0,0,0,0.85);
+      padding: 30px 40px;
+      border-radius: 25px;
+      box-shadow: 0 0 30px rgba(0,255,255,0.3);
+      max-width: 500px;
+      width: 100%;
+      text-align: center;
+      position: relative;
+      z-index: 1;
+    }
+
+    h1 {
+      color: #00ffff;
+      margin-bottom: 25px;
+      text-shadow: 0 0 10px #00ffff;
+    }
+
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+    }
+
+    label {
+      font-weight: 600;
+      text-align: left;
+    }
+
+    select, input[type="number"], input[type="text"] {
+      padding: 12px;
+      border-radius: 12px;
+      border: 1px solid #00ffff;
+      width: 100%;
+      font-size: 1em;
+      background: rgba(255,255,255,0.1);
+      color: #fff;
+      transition: 0.3s ease;
+    }
+
+    select:focus, input:focus {
+      outline: none;
+      box-shadow: 0 0 10px #00ffff;
+      border-color: #00ffff;
+      background: rgba(255,255,255,0.2);
+    }
+
+    button {
+      padding: 14px;
+      border: none;
+      border-radius: 12px;
+      background: linear-gradient(90deg, #00ffff, #0077ff);
+      color: white;
+      font-weight: 600;
+      cursor: pointer;
+      font-size: 1em;
+      transition: 0.3s ease;
+    }
+
+    button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 0 15px #00ffff;
+    }
+
+    .result {
+      margin-top: 20px;
+      padding: 15px;
+      background: rgba(0,255,255,0.1);
+      border-radius: 12px;
+      font-weight: 600;
+      font-size: 1.2em;
+      color: #00ffff;
+      text-shadow: 0 0 5px #00ffff;
+      animation: glow 1.5s infinite alternate;
+    }
+
+    @keyframes glow {
+      0% { box-shadow: 0 0 5px #00ffff; }
+      100% { box-shadow: 0 0 20px #00ffff; }
+    }
+  </style>
+</head>
+<body>
+  <!-- Floating Stars -->
+  <script>
+    for(let i=0;i<60;i++){
+      let star = document.createElement('div');
+      star.className = 'star';
+      let size = Math.random()*3 + 1;
+      star.style.width = size + 'px';
+      star.style.height = size + 'px';
+      star.style.left = Math.random()*100 + 'vw';
+      star.style.top = Math.random()*100 + 'vh';
+      document.body.appendChild(star);
+    }
+  </script>
+
+  <div class="container">
+    <h1>Academic Stress Predictor 🤖</h1>
+    <form action="/predict" method="post">
+      <label for="peer_pressure">Peer Pressure (1-5):</label>
+      <input type="number" id="peer_pressure" name="peer_pressure" min="1" max="5" required>
+
+      <label for="home_pressure">Academic Pressure from Home (1-5):</label>
+      <input type="number" id="home_pressure" name="home_pressure" min="1" max="5" required>
+
+      <label for="competition">Academic Competition (1-5):</label>
+      <input type="number" id="competition" name="competition" min="1" max="5" required>
+
+      <label for="academic_stage">Your Academic Stage:</label>
+      <select id="academic_stage" name="academic_stage" required>
+        <option value="undergraduate">Undergraduate</option>
+        <option value="postgraduate">Postgraduate</option>
+        <option value="phd">PhD</option>
+      </select>
+
+      <label for="study_env">Study Environment:</label>
+      <select id="study_env" name="study_env" required>
+        <option value="Peaceful">Peaceful</option>
+        <option value="Noisy">Noisy</option>
+      </select>
+
+      <label for="coping">Coping Strategy:</label>
+      <select id="coping" name="coping" required>
+        <option value="Analyze the situation and handle it with intelligence">Analyze & Handle</option>
+        <option value="Social support (friends, family)">Social Support</option>
+        <option value="Avoidance or distraction techniques">Avoidance/Distraction</option>
+      </select>
+
+      <label for="bad_habits">Bad Habits (Smoking/Drinking):</label>
+      <select id="bad_habits" name="bad_habits" required>
+        <option value="No">No</option>
+        <option value="Yes">Yes</option>
+      </select>
+
+      <button type="submit">Predict Stress Level</button>
+    </form>
+
+    {% if prediction_text %}
+    <div class="result">{{ prediction_text }}</div>
+    {% endif %}
+  </div>
+</body>
+</html>
